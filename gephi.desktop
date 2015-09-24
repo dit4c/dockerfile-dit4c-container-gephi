@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Gephi
+Comment=Network analysis
+Exec=/usr/local/bin/gephi
+Icon=/usr/share/icons/gnome/48x48/apps/gephi48.png
+Terminal=false
+Type=Application
+Categories=Math;Science;Education;
