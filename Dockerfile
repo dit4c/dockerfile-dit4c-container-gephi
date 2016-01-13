@@ -1,11 +1,15 @@
 # Dockerfile for Gephi graph image manipulation software
-FROM dit4c/dit4c-container-x11
+FROM dit4c/dit4c-container-x11:latest
 MAINTAINER Tim Dettrick <t.dettrick@uq.edu.au>
 
-RUN sudo yum install -y java-1.7.0-openjdk-devel
+USER root
 
-RUN curl -L -s https://launchpad.net/gephi/0.8/0.8.2beta/+download/gephi-0.8.2-beta.tar.gz | tar xzvC /opt && \
-    ln -s /opt/gephi/bin/gephi /usr/local/bin/gephi
+RUN rpm --rebuilddb && yum install -y java-1.8.0-openjdk-devel
+
+# Install Gephi, remove unnecessary files and symlink the binary into the path
+RUN curl -L -s https://github.com/gephi/gephi/releases/download/v0.9.0/gephi-0.9.0-linux.tar.gz | tar xzvC /opt && \
+    find /opt/gephi* \( -name "*.dll" -or -name "*.exe" \) -exec rm -f {} \; && \
+    ln -s /opt/gephi*/bin/gephi /usr/local/bin/gephi
 
 COPY gephi.desktop /usr/share/applications/
 
